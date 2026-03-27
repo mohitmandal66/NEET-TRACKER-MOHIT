@@ -96,7 +96,7 @@
         <div class="flex items-center gap-4">
             <div>
                 <h1 class="text-lg font-black tracking-tighter">NEET<span class="text-yellow-500">PRO</span></h1>
-                <p id="nav-display-date" class="text-[9px] text-blue-500 font-bold uppercase tracking-widest">March 26, 2026</p>
+                <p id="nav-display-date" class="text-[9px] text-blue-500 font-bold uppercase tracking-widest"></p>
             </div>
         </div>
         <div class="flex bg-slate-900 rounded-full p-1 border border-slate-800">
@@ -144,7 +144,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 p-4 bg-white/5 rounded-2xl border border-white/10">
                     <div>
                         <label class="text-[9px] uppercase font-bold text-slate-500 ml-1 italic">Active Date (Auto-Synced)</label>
-                        <div id="active-date-box" class="bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-blue-400 font-bold mt-1">March 26, 2026</div>
+                        <div id="active-date-box" class="bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-blue-400 font-bold mt-1"></div>
                     </div>
                     <div class="flex gap-2 items-end">
                         <div class="flex-1">
@@ -163,16 +163,19 @@
     </main>
 
     <footer class="max-w-6xl mx-auto mt-12 mb-8 flex justify-center">
-        <button onclick="factoryReset()" class="text-[10px] text-slate-600 hover:text-red-500 border border-slate-800 hover:border-red-500/50 px-8 py-2 rounded-full transition-all font-bold tracking-widest uppercase">Reset Dashboard</button>
+        <button onclick="deleteSelectedDayData()" class="text-[10px] text-slate-600 hover:text-red-500 border border-slate-800 hover:border-red-500/50 px-8 py-2 rounded-full transition-all font-bold tracking-widest uppercase">Clear Selected Day</button>
     </footer>
 
     <script>
-        const REAL_TODAY = "2026-03-26";
+        // Logic to get actual system date every time
+        const getTodayKey = () => new Date().toISOString().split('T')[0];
+        
+        let REAL_TODAY = getTodayKey();
         const TOTAL_GOAL = 25000;
         let selectedDate = REAL_TODAY; 
         let currentMode = 'normal';
         let currentSubject = 'physics';
-        let viewMonthDate = new Date(2026, 2, 1); 
+        let viewMonthDate = new Date(); 
         let myChart = null;
 
         let db = JSON.parse(localStorage.getItem('aiims_sync_final')) || { 
@@ -324,14 +327,30 @@
 
         function changeMonth(d) { viewMonthDate.setMonth(viewMonthDate.getMonth() + d); renderCalendar(); }
         
-        function factoryReset() {
-            if(confirm("Reset all portal data?")) { localStorage.clear(); location.reload(); }
+        // New specific delete logic
+        function deleteSelectedDayData() {
+            if(confirm(`Delete all data for ${selectedDate}?`)) {
+                delete db.physics[selectedDate];
+                delete db.chemistry[selectedDate];
+                delete db.biology[selectedDate];
+                delete db.taskHistory[selectedDate];
+                localStorage.setItem('aiims_sync_final', JSON.stringify(db));
+                location.reload();
+            }
         }
 
         window.onload = () => {
+            // Re-check real today on load (handles midnight transition)
+            REAL_TODAY = getTodayKey();
+            selectedDate = REAL_TODAY;
+            document.getElementById('nav-display-date').innerText = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            document.getElementById('active-date-box').innerText = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            
             setSubject('physics');
             switchMode('normal');
             updateManzilMeter();
+            renderCalendar();
+            renderChecklist();
         };
     </script>
 </body>
