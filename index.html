@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DR. MOHIT | AIIMS DELHI PORTAL</title>
+    <title>DR. MOHIT | MISSION AIIMS DELHI 2027</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #020617; scroll-behavior: smooth; color: #f1f5f9; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
@@ -25,7 +25,6 @@
             font-weight: 900 !important;
         }
         .selected-date { border: 2px solid #3b82f6 !important; background: rgba(59, 130, 246, 0.2); }
-        .mode-transition { transition: all 0.3s ease; }
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
         .road-path {
@@ -34,13 +33,13 @@
             border-bottom: 3px dashed rgba(255, 255, 255, 0.1);
             position: relative;
             border-radius: 12px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
         .avatar-mohit {
             position: absolute;
-            bottom: 8px;
-            width: 50px;
-            height: 50px;
+            bottom: 6px;
+            width: 44px;
+            height: 44px;
             transition: left 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 20;
             filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
@@ -49,99 +48,230 @@
         }
         .aiims-dest {
             position: absolute;
-            right: -15px;
-            top: -35px;
-            width: 85px;
-            height: 85px;
+            right: -10px;
+            top: -24px;
+            width: 70px;
+            height: 70px;
             z-index: 10;
             filter: drop-shadow(0 0 15px rgba(234, 179, 8, 0.3));
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        /* Countdown neon styling */
+        .neon-number {
+            font-family: 'Consolas', monospace;
+            color: #00d2ff;
+            text-shadow: 0 0 16px rgba(0, 210, 255, 0.45);
+        }
     </style>
 </head>
-<body class="min-h-screen pb-10 px-4">
+<body class="min-h-screen pb-12 px-4">
 
-    <div class="max-w-6xl mx-auto pt-6">
-        <div class="glass rounded-3xl p-6 flex flex-wrap items-center justify-between border-l-4 border-yellow-500 relative overflow-hidden mb-6">
-            <div class="absolute top-0 right-0 p-4 opacity-5 text-7xl italic font-black">AIIMS</div>
+    <!-- Top Banner -->
+    <header class="max-w-7xl mx-auto pt-6 mb-6">
+        <div class="glass rounded-3xl p-6 flex flex-wrap items-center justify-between border-l-4 border-yellow-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-5 text-7xl italic font-black pointer-events-none select-none">AIIMS</div>
             <div class="flex items-center gap-5 relative z-10">
                 <div class="w-14 h-14 bg-gradient-to-tr from-yellow-600 to-yellow-300 rounded-2xl flex items-center justify-center font-black text-2xl text-slate-900 shadow-xl shadow-yellow-500/20">DR</div>
                 <div>
                     <h3 class="text-2xl font-black text-white tracking-tighter uppercase italic">Dr. Mohit Mandal <span class="text-yellow-500 underline">AIIMS DELHI</span></h3>
-                    <p class="text-blue-400 text-xs font-black tracking-widest mt-1 uppercase italic">26 SEP 2026 → 2 MAY 2027 | PRACTICE MARATHON</p>
+                    <p class="text-blue-400 text-xs font-black tracking-widest mt-1 uppercase italic">TARGET: 2 MAY 2027 | MISSION COMMAND CENTER</p>
                 </div>
+            </div>
+            <div class="mt-4 md:mt-0 text-right">
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-semibold block">Active System Date</span>
+                <span id="nav-display-date" class="text-sm font-bold text-yellow-400"></span>
             </div>
         </div>
+    </header>
 
-        <section class="glass rounded-3xl p-8 mb-8 overflow-hidden border-b-4 border-blue-600">
-            <div class="flex justify-between items-end mb-2">
-                <h2 class="text-xs font-bold uppercase text-blue-400 tracking-[0.4em] italic">MANZIL METER</h2>
-                <div class="text-right">
-                    <span id="total-mcq-display" class="text-3xl font-black text-white italic tracking-tighter">0</span>
-                    <span class="text-sm font-bold text-slate-500 uppercase"> / 30,000</span>
+    <!-- Main 2-Column Split: Left (Countdown) & Right (Practice Tracker) -->
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- ================= LEFT COLUMN: MISSION AIIMS COUNTDOWN ================= -->
+        <section class="lg:col-span-5 space-y-6">
+            <div class="glass rounded-3xl p-6 border-2 border-cyan-500/40 shadow-lg shadow-cyan-500/5">
+                <div class="text-center mb-6">
+                    <span class="inline-block bg-cyan-500/10 border border-cyan-400 text-cyan-400 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-[3px] uppercase mb-3">
+                        NEET UG 2027 TARGET
+                    </span>
+                    <h2 class="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                        MISSION: AIIMS DELHI
+                    </h2>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">May 2, 2027 • 02:00 PM</p>
                 </div>
-            </div>
-            <div class="road-path">
-                <img src="mohit.png" id="mohit-walker" class="avatar-mohit" style="left: 0%" alt="Mohit">
-                <img src="aiimsmohit.png" class="aiims-dest" alt="Goal">
-            </div>
-            <div class="flex justify-between mt-4 text-[10px] font-black uppercase tracking-widest">
-                <span id="manzil-percent" class="text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">0% Journey Completed</span>
+
+                <!-- Slot 1: Absolute Calendar Balance -->
+                <div class="mb-6">
+                    <h4 class="text-[10px] text-slate-400 uppercase tracking-[2px] font-bold mb-3 flex items-center gap-1.5">
+                        <span>🗓️</span> Slot 1: Absolute Calendar Balance
+                    </h4>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-white/[0.02] border border-white/10 rounded-xl p-3 text-center">
+                            <div id="absMonths" class="text-2xl font-bold neon-number">00</div>
+                            <div class="text-[9px] uppercase tracking-wider text-slate-400 mt-1 font-semibold">Months</div>
+                        </div>
+                        <div class="bg-white/[0.02] border border-white/10 rounded-xl p-3 text-center">
+                            <div id="absWeeks" class="text-2xl font-bold neon-number">00</div>
+                            <div class="text-[9px] uppercase tracking-wider text-slate-400 mt-1 font-semibold">Weeks</div>
+                        </div>
+                        <div class="bg-white/[0.02] border border-white/10 rounded-xl p-3 text-center">
+                            <div id="absDays" class="text-2xl font-bold neon-number">00</div>
+                            <div class="text-[9px] uppercase tracking-wider text-slate-400 mt-1 font-semibold">Days</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot 2: Total Running Time Left -->
+                <div class="mb-6">
+                    <h4 class="text-[10px] text-slate-400 uppercase tracking-[2px] font-bold mb-3 flex items-center gap-1.5">
+                        <span>⏱️</span> Slot 2: Total Running Time Left
+                    </h4>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-white/[0.02] border border-white/10 rounded-xl p-3 text-center">
+                            <div id="runningHours" class="text-2xl font-bold neon-number">0000</div>
+                            <div class="text-[9px] uppercase tracking-wider text-slate-400 mt-1 font-semibold">Total Hours</div>
+                        </div>
+                        <div class="bg-white/[0.02] border border-white/10 rounded-xl p-3 text-center">
+                            <div id="clockMinutes" class="text-2xl font-bold neon-number">00</div>
+                            <div class="text-[9px] uppercase tracking-wider text-slate-400 mt-1 font-semibold">Minutes</div>
+                        </div>
+                        <div class="bg-white/[0.02] border border-white/10 rounded-xl p-3 text-center">
+                            <div id="clockSeconds" class="text-2xl font-bold neon-number">00</div>
+                            <div class="text-[9px] uppercase tracking-wider text-slate-400 mt-1 font-semibold">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button onclick="initializeSystem()" class="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black py-3 rounded-xl transition-all tracking-wider text-xs uppercase shadow-lg shadow-cyan-400/20 active:scale-95">
+                    ⚡ ACTIVATE HOURLY ALERTS
+                </button>
             </div>
         </section>
-    </div>
 
-    <nav class="max-w-6xl mx-auto p-4 flex justify-between items-center sticky top-4 z-50 glass rounded-2xl mb-8">
-        <div class="flex items-center gap-4">
-            <div>
-                <h1 class="text-lg font-black tracking-tighter">26 SEP 2026 → 2 MAY 2027</h1>
-                <p id="nav-display-date" class="text-[9px] text-blue-500 font-bold uppercase tracking-widest">26 SEP 2026 → 2 MAY 2027</p>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-<div class="lg:col-span-12 space-y-6">
-            <div class="glass rounded-3xl p-6">
-                <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
-                    <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
-                        <button onclick="setSubject('physics')" id="tab-physics" class="px-5 py-2 rounded-lg text-xs font-bold transition-all">Physics</button>
-                        <button onclick="setSubject('chemistry')" id="tab-chemistry" class="px-5 py-2 rounded-lg text-xs font-bold transition-all">Chemistry</button>
-                        <button onclick="setSubject('biology')" id="tab-biology" class="px-5 py-2 rounded-lg text-xs font-bold transition-all">Biology</button>
+        <!-- ================= RIGHT COLUMN: MCQ TRACKER & ANALYTICS ================= -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Manzil Meter -->
+            <div class="glass rounded-3xl p-6 border-b-4 border-blue-600">
+                <div class="flex justify-between items-end mb-1">
+                    <h2 class="text-xs font-bold uppercase text-blue-400 tracking-[0.3em] italic">MANZIL METER</h2>
+                    <div class="text-right">
+                        <span id="total-mcq-display" class="text-2xl font-black text-white italic tracking-tighter">0</span>
+                        <span class="text-xs font-bold text-slate-500 uppercase"> / 30,000</span>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <button onclick="changeMonth(-1)" class="p-2 text-slate-500 hover:text-white">←</button>
+                </div>
+                <div class="road-path">
+                    <img src="mohit.png" id="mohit-walker" class="avatar-mohit" style="left: 0%" alt="Mohit" onerror="this.src='https://via.placeholder.com/44/3b82f6/ffffff?text=M'">
+                    <img src="aiimsmohit.png" class="aiims-dest" alt="Goal" onerror="this.src='https://via.placeholder.com/70/eab308/ffffff?text=AIIMS'">
+                </div>
+                <div class="flex justify-between mt-3 text-[10px] font-black uppercase tracking-widest">
+                    <span id="manzil-percent" class="text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full">0.0% Journey Completed</span>
+                </div>
+            </div>
+
+            <!-- Subject Tabs, Calendar & Logger -->
+            <div class="glass rounded-3xl p-6">
+                <div class="flex flex-wrap items-center justify-between mb-6 gap-3">
+                    <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
+                        <button onclick="setSubject('physics')" id="tab-physics" class="px-4 py-1.5 rounded-lg text-xs font-bold transition-all">Physics</button>
+                        <button onclick="setSubject('chemistry')" id="tab-chemistry" class="px-4 py-1.5 rounded-lg text-xs font-bold transition-all">Chemistry</button>
+                        <button onclick="setSubject('biology')" id="tab-biology" class="px-4 py-1.5 rounded-lg text-xs font-bold transition-all">Biology</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="changeMonth(-1)" class="p-2 text-slate-400 hover:text-white transition-colors">←</button>
                         <span id="month-display" class="text-xs font-black uppercase tracking-[0.2em] text-yellow-500"></span>
-                        <button onclick="changeMonth(1)" class="p-2 text-slate-500 hover:text-white">→</button>
+                        <button onclick="changeMonth(1)" class="p-2 text-slate-400 hover:text-white transition-colors">→</button>
                     </div>
                 </div>
                 
-                <div id="calendar-days" class="calendar-grid mb-8"></div>
+                <div id="calendar-days" class="calendar-grid mb-6"></div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 p-4 bg-white/5 rounded-2xl border border-white/10">
                     <div>
-                        <label class="text-[9px] uppercase font-bold text-slate-500 ml-1 italic">Active Date (Auto-Synced)</label>
-                        <div id="active-date-box" class="bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-blue-400 font-bold mt-1"></div>
+                        <div class="flex justify-between items-center ml-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-500 italic">Active Date</label>
+                            <button onclick="deleteSelectedDayData()" class="text-[9px] text-red-400 hover:underline">Reset Day</button>
+                        </div>
+                        <div id="active-date-box" class="bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-xs text-blue-400 font-bold mt-1"></div>
                     </div>
                     <div class="flex gap-2 items-end">
                         <div class="flex-1">
                             <label class="text-[9px] uppercase font-bold text-slate-500 ml-1 italic">MCQ Count</label>
-                            <input type="number" id="log-count" placeholder="0" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-yellow-500 mt-1">
+                            <input type="number" id="log-count" placeholder="0" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs outline-none focus:border-yellow-500 mt-1">
                         </div>
-                        <button onclick="saveDailyData()" class="bg-yellow-600 hover:bg-yellow-500 text-slate-900 font-black px-6 py-2.5 rounded-xl transition-all text-[10px] uppercase">Log</button>
+                        <button onclick="saveDailyData()" class="bg-yellow-600 hover:bg-yellow-500 text-slate-900 font-black px-5 py-2 rounded-xl transition-all text-xs uppercase">Log</button>
                     </div>
                 </div>
             </div>
 
-            <div class="glass rounded-3xl p-6 h-80">
+            <!-- Analysis Chart -->
+            <div class="glass rounded-3xl p-6 h-72">
                 <canvas id="analysisChart"></canvas>
             </div>
-        </div>
+
+        </section>
     </main>
 
     <script>
-        // Logic to get actual system date every time
+        /* ---------------- COUNTDOWN ENGINE ---------------- */
+        const targetDate = new Date("May 2, 2027 14:00:00").getTime();
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => {
+                    console.log('SW Registered');
+                    reg.update();
+                })
+                .catch(err => console.error('SW Registration Failed:', err));
+        }
+
+        function initializeSystem() {
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notifications.");
+                return;
+            }
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage({ action: 'startAutomation' });
+                        alert("System Synced! Live hourly updates are active.");
+                    } else {
+                        alert("System initialized! Please refresh the page once to link notifications.");
+                    }
+                } else {
+                    alert("Please allow notification access to enable hourly alerts.");
+                }
+            });
+        }
+
+        function updateLiveCounters() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff <= 0) return;
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
+
+            const absMonths = Math.floor(totalDays / 30.44);
+            const absWeeks = Math.floor(totalDays / 7);
+            const absDays = totalDays;
+
+            const clockMinutes = totalMinutes % 60;
+            const clockSeconds = totalSeconds % 60;
+
+            document.getElementById("absMonths").innerText = absMonths.toString().padStart(2, '0');
+            document.getElementById("absWeeks").innerText = absWeeks.toString().padStart(2, '0');
+            document.getElementById("absDays").innerText = absDays.toString().padStart(2, '0');
+
+            document.getElementById("runningHours").innerText = totalHours.toLocaleString();
+            document.getElementById("clockMinutes").innerText = clockMinutes.toString().padStart(2, '0');
+            document.getElementById("clockSeconds").innerText = clockSeconds.toString().padStart(2, '0');
+        }
+
+        /* ---------------- PRACTICE MARATHON TRACKER ---------------- */
         const getTodayKey = () => new Date().toISOString().split('T')[0];
         
         let REAL_TODAY = getTodayKey();
@@ -155,20 +285,25 @@
         function updateManzilMeter() {
             let total = 0;
             ['physics', 'chemistry', 'biology'].forEach(sub => {
-                Object.values(db[sub]).forEach(count => { total += (parseInt(count) || 0); });
+                if (db[sub]) {
+                    Object.values(db[sub]).forEach(count => { total += (parseInt(count) || 0); });
+                }
             });
             const percentage = Math.min((total / TOTAL_GOAL) * 100, 100);
             document.getElementById('total-mcq-display').innerText = total.toLocaleString();
             document.getElementById('manzil-percent').innerText = `${percentage.toFixed(1)}% Journey Completed`;
-            document.getElementById('mohit-walker').style.left = `${(percentage / 100) * 92}%`;
+            document.getElementById('mohit-walker').style.left = `${(percentage / 100) * 88}%`;
         }
 
         function saveDailyData() {
             const val = parseInt(document.getElementById('log-count').value);
             if (isNaN(val) || val < 0) return;
-            db[currentSubject][REAL_TODAY] = (db[currentSubject][REAL_TODAY] || 0) + val;
+            if (!db[currentSubject]) db[currentSubject] = {};
+            
+            db[currentSubject][selectedDate] = (db[currentSubject][selectedDate] || 0) + val;
             localStorage.setItem('practice_marathon_2026', JSON.stringify(db));
-            renderCalendar(); updateManzilMeter();
+            renderCalendar(); 
+            updateManzilMeter();
             document.getElementById('log-count').value = '';
         }
 
@@ -176,7 +311,9 @@
             currentSubject = s;
             ['physics', 'chemistry', 'biology'].forEach(sub => {
                 const el = document.getElementById(`tab-${sub}`);
-                if(el) el.className = `px-5 py-2 rounded-lg text-xs font-bold transition-all ${sub === s ? 'bg-yellow-600 text-slate-900' : 'text-slate-500'}`;
+                if (el) {
+                    el.className = `px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${sub === s ? 'bg-yellow-600 text-slate-900' : 'text-slate-500 hover:text-white'}`;
+                }
             });
             renderCalendar();
         }
@@ -193,24 +330,24 @@
             let scores = [];
             for (let d = 1; d <= daysInMonth; d++) {
                 const dateKey = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                const count = db[currentSubject][dateKey] || 0;
+                const count = (db[currentSubject] && db[currentSubject][dateKey]) ? db[currentSubject][dateKey] : 0;
                 scores.push(count);
                 
-                let colorClass = 'bg-white/5 opacity-30 border-transparent';
-                if (count >= 100) colorClass = 'bg-green-600 text-white opacity-100';
-                else if (count >= 50) colorClass = 'bg-yellow-500 text-black opacity-100';
+                let colorClass = 'bg-white/5 opacity-40 border-transparent';
+                if (count >= 100) colorClass = 'bg-emerald-600 text-white opacity-100';
+                else if (count >= 50) colorClass = 'bg-yellow-500 text-slate-950 font-bold opacity-100';
                 else if (count > 0) colorClass = 'bg-blue-600 text-white opacity-100';
 
                 let special = (dateKey === REAL_TODAY) ? 'today-sparkle' : (dateKey === selectedDate ? 'selected-date' : '');
-                container.innerHTML += `<div onclick="selectDate('${dateKey}')" class="aspect-square flex items-center justify-center rounded-lg text-[9px] border cursor-pointer transition-all ${colorClass} ${special}">${d}</div>`;
+                container.innerHTML += `<div onclick="selectDate('${dateKey}')" class="aspect-square flex items-center justify-center rounded-lg text-[10px] border cursor-pointer transition-all ${colorClass} ${special}">${d}</div>`;
             }
             updateGraph(scores);
         }
 
         function selectDate(date) {
             selectedDate = date;
-            document.getElementById('viewing-date-label').innerText = date === REAL_TODAY ? "Viewing Today" : `Date: ${date}`;
-            renderCalendar(); renderChecklist();
+            document.getElementById('active-date-box').innerText = date === REAL_TODAY ? `${date} (Today)` : date;
+            renderCalendar();
         }
 
         function updateGraph(data) {
@@ -220,9 +357,15 @@
                 type: 'bar',
                 data: {
                     labels: Array.from({length: data.length}, (_, i) => i + 1),
-                    datasets: [{ data: data, backgroundColor: '#3b82f6', borderRadius: 4 }]
+                    datasets: [{ 
+                        label: `${currentSubject.toUpperCase()} MCQs`,
+                        data: data, 
+                        backgroundColor: '#3b82f6', 
+                        borderRadius: 4 
+                    }]
                 },
                 options: {
+                    responsive: true,
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
@@ -233,29 +376,35 @@
             });
         }
 
-        function changeMonth(d) { viewMonthDate.setMonth(viewMonthDate.getMonth() + d); renderCalendar(); }
-        
-        // New specific delete logic
+        function changeMonth(d) { 
+            viewMonthDate.setMonth(viewMonthDate.getMonth() + d); 
+            renderCalendar(); 
+        }
+
         function deleteSelectedDayData() {
-            if(confirm(`Delete all data for ${selectedDate}?`)) {
-                delete db.physics[selectedDate];
-                delete db.chemistry[selectedDate];
-                delete db.biology[selectedDate];
+            if(confirm(`Reset logged MCQs for ${selectedDate}?`)) {
+                if (db.physics) delete db.physics[selectedDate];
+                if (db.chemistry) delete db.chemistry[selectedDate];
+                if (db.biology) delete db.biology[selectedDate];
                 localStorage.setItem('practice_marathon_2026', JSON.stringify(db));
-                location.reload();
+                renderCalendar();
+                updateManzilMeter();
             }
         }
 
         window.onload = () => {
-            // Re-check real today on load (handles midnight transition)
             REAL_TODAY = getTodayKey();
             selectedDate = REAL_TODAY;
-            document.getElementById('nav-display-date').innerText = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-            document.getElementById('active-date-box').innerText = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const fullDateString = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            document.getElementById('nav-display-date').innerText = fullDateString;
+            document.getElementById('active-date-box').innerText = `${REAL_TODAY} (Today)`;
             
             setSubject('physics');
             updateManzilMeter();
             renderCalendar();
+
+            setInterval(updateLiveCounters, 1000);
+            updateLiveCounters();
         };
     </script>
 </body>
