@@ -69,17 +69,17 @@
                 <div class="w-14 h-14 bg-gradient-to-tr from-yellow-600 to-yellow-300 rounded-2xl flex items-center justify-center font-black text-2xl text-slate-900 shadow-xl shadow-yellow-500/20">DR</div>
                 <div>
                     <h3 class="text-2xl font-black text-white tracking-tighter uppercase italic">Dr. Mohit Mandal <span class="text-yellow-500 underline">AIIMS DELHI</span></h3>
-                    <p class="text-blue-400 text-xs font-black tracking-widest mt-1 uppercase italic">AIR 1 | NEET 2027 STRATEGY PORTAL</p>
+                    <p class="text-blue-400 text-xs font-black tracking-widest mt-1 uppercase italic">26 SEP 2026 → 2 MAY 2027 | PRACTICE MARATHON</p>
                 </div>
             </div>
         </div>
 
         <section class="glass rounded-3xl p-8 mb-8 overflow-hidden border-b-4 border-blue-600">
             <div class="flex justify-between items-end mb-2">
-                <h2 class="text-xs font-bold uppercase text-blue-400 tracking-[0.4em] italic">AIIMS Manzil Meter</h2>
+                <h2 class="text-xs font-bold uppercase text-blue-400 tracking-[0.4em] italic">MANZIL METER</h2>
                 <div class="text-right">
                     <span id="total-mcq-display" class="text-3xl font-black text-white italic tracking-tighter">0</span>
-                    <span class="text-sm font-bold text-slate-500 uppercase"> / 25,000</span>
+                    <span class="text-sm font-bold text-slate-500 uppercase"> / 30,000</span>
                 </div>
             </div>
             <div class="road-path">
@@ -95,36 +95,14 @@
     <nav class="max-w-6xl mx-auto p-4 flex justify-between items-center sticky top-4 z-50 glass rounded-2xl mb-8">
         <div class="flex items-center gap-4">
             <div>
-                <h1 class="text-lg font-black tracking-tighter">NEET<span class="text-yellow-500">PRO</span></h1>
-                <p id="nav-display-date" class="text-[9px] text-blue-500 font-bold uppercase tracking-widest"></p>
+                <h1 class="text-lg font-black tracking-tighter">26 SEP 2026 → 2 MAY 2027</h1>
+                <p id="nav-display-date" class="text-[9px] text-blue-500 font-bold uppercase tracking-widest">26 SEP 2026 → 2 MAY 2027</p>
             </div>
-        </div>
-        <div class="flex bg-slate-900 rounded-full p-1 border border-slate-800">
-            <button onclick="switchMode('normal')" id="btn-normal" class="px-5 py-2 rounded-full text-xs font-bold mode-transition">NEET PREP 🔵</button>
-            <button onclick="switchMode('exam')" id="btn-exam" class="px-5 py-2 rounded-full text-xs font-bold mode-transition">Exam 🔴</button>
         </div>
     </nav>
 
     <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-4 space-y-6">
-            <section class="glass rounded-3xl p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 class="text-xs font-bold uppercase text-slate-400 tracking-widest italic">Task Master</h2>
-                        <p id="viewing-date-label" class="text-[9px] text-yellow-500 font-bold uppercase mt-1">Viewing Today</p>
-                    </div>
-                    <span id="completion-stat" class="text-[10px] font-bold text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded">0/0</span>
-                </div>
-                <div id="checklist" class="space-y-2"></div>
-                <div class="mt-6 pt-4 border-t border-white/5">
-                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                        <div id="progress-bar" class="bg-gradient-to-r from-blue-600 to-yellow-500 h-full transition-all duration-700" style="width: 0%"></div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div class="lg:col-span-8 space-y-6">
+<div class="lg:col-span-12 space-y-6">
             <div class="glass rounded-3xl p-6">
                 <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
                     <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
@@ -162,47 +140,17 @@
         </div>
     </main>
 
-    <footer class="max-w-6xl mx-auto mt-12 mb-8 flex justify-center">
-        <button onclick="deleteSelectedDayData()" class="text-[10px] text-slate-600 hover:text-red-500 border border-slate-800 hover:border-red-500/50 px-8 py-2 rounded-full transition-all font-bold tracking-widest uppercase">Clear Selected Day</button>
-    </footer>
-
     <script>
         // Logic to get actual system date every time
         const getTodayKey = () => new Date().toISOString().split('T')[0];
         
         let REAL_TODAY = getTodayKey();
-        const TOTAL_GOAL = 25000;
-        let selectedDate = REAL_TODAY; 
-        let currentMode = 'normal';
+        const TOTAL_GOAL = 30000;
+        let selectedDate = REAL_TODAY;
         let currentSubject = 'physics';
         let viewMonthDate = new Date(); 
         let myChart = null;
-
-        let db = JSON.parse(localStorage.getItem('aiims_sync_final')) || { 
-            physics: {}, chemistry: {}, biology: {}, taskHistory: {} 
-        };
-
-        const baseTasks = [
-            { id: "b1", label: "Bio NCERT", time: "08:00 - 10:00" },
-            { id: "b2", label: "Phy Formula", time: "10:00 - 12:00" },
-            { id: "b3", label: "Chem Notes", time: "12:00 - 15:00" },
-            { id: "b4", label: "Bio MCQ Sprint", time: "15:30 - 16:00" },
-            { id: "b5", label: "Coaching Focus", time: "16:00 - 20:00" }
-        ];
-
-        const modeTasks = {
-            normal: [
-                { id: "n1", label: "Phy Revision", time: "10:30 - 11:00 PM" },
-                { id: "n2", label: "Phy MCQ Session", time: "11:00 - 11:30 PM" },
-                { id: "n3", label: "Chem Revision", time: "11:30 - 12:00 AM" },
-                { id: "n4", label: "Chem MCQ Session", time: "12:00 - 12:30 AM" },
-                { id: "n5", label: "11th Revision", time: "12:30 - 01:30 AM" }
-            ],
-            exam: [
-                { id: "e1", label: "Phy Derivations & Qs", time: "10:30 - 11:30 PM" },
-                { id: "e2", label: "Chem Qs Practice", time: "11:30 - 12:30 AM" }
-            ]
-        };
+        let db = JSON.parse(localStorage.getItem('practice_marathon_2026')) || { physics: {}, chemistry: {}, biology: {} };
 
         function updateManzilMeter() {
             let total = 0;
@@ -219,16 +167,9 @@
             const val = parseInt(document.getElementById('log-count').value);
             if (isNaN(val) || val < 0) return;
             db[currentSubject][REAL_TODAY] = (db[currentSubject][REAL_TODAY] || 0) + val;
-            localStorage.setItem('aiims_sync_final', JSON.stringify(db));
+            localStorage.setItem('practice_marathon_2026', JSON.stringify(db));
             renderCalendar(); updateManzilMeter();
             document.getElementById('log-count').value = '';
-        }
-
-        function switchMode(m) {
-            currentMode = m;
-            document.getElementById('btn-normal').className = `px-5 py-2 rounded-full text-xs font-bold mode-transition ${m==='normal' ? 'bg-blue-600 text-white' : 'text-slate-500'}`;
-            document.getElementById('btn-exam').className = `px-5 py-2 rounded-full text-xs font-bold mode-transition ${m==='exam' ? 'bg-red-600 text-white' : 'text-slate-500'}`;
-            renderChecklist();
         }
 
         function setSubject(s) {
@@ -266,39 +207,6 @@
             updateGraph(scores);
         }
 
-        function renderChecklist() {
-            const tasks = [...baseTasks, ...modeTasks[currentMode]];
-            const history = db.taskHistory[selectedDate] || {};
-            document.getElementById('checklist').innerHTML = tasks.map(t => {
-                const status = history[t.id];
-                let cls = "border-white/5 bg-white/5 text-slate-500";
-                let icon = "○";
-                if (status === 'done') { cls = "border-green-500/40 bg-green-500/10 text-green-400"; icon = "✓"; }
-                if (status === 'not-done') { cls = "border-red-500/40 bg-red-500/10 text-red-400"; icon = "✕"; }
-                
-                return `<div onclick="toggleTask('${t.id}', 'done')" ondblclick="toggleTask('${t.id}', 'not-done')" class="flex items-center justify-between p-3 rounded-xl border cursor-pointer select-none transition-all ${cls}">
-                    <div class="flex flex-col"><span class="text-[10px] font-bold uppercase">${t.label}</span><span class="text-[8px] opacity-60 italic font-mono">${t.time}</span></div>
-                    <span class="font-bold">${icon}</span>
-                </div>`;
-            }).join('');
-            updateProgress();
-        }
-
-        function toggleTask(id, type) {
-            if (!db.taskHistory[selectedDate]) db.taskHistory[selectedDate] = {};
-            db.taskHistory[selectedDate][id] = (db.taskHistory[selectedDate][id] === type) ? null : type;
-            localStorage.setItem('aiims_sync_final', JSON.stringify(db));
-            renderChecklist();
-        }
-
-        function updateProgress() {
-            const tasks = [...baseTasks, ...modeTasks[currentMode]];
-            const history = db.taskHistory[selectedDate] || {};
-            const done = tasks.filter(t => history[t.id] === 'done').length;
-            document.getElementById('completion-stat').innerText = `${done}/${tasks.length}`;
-            document.getElementById('progress-bar').style.width = `${(done / tasks.length) * 100}%`;
-        }
-
         function selectDate(date) {
             selectedDate = date;
             document.getElementById('viewing-date-label').innerText = date === REAL_TODAY ? "Viewing Today" : `Date: ${date}`;
@@ -333,8 +241,7 @@
                 delete db.physics[selectedDate];
                 delete db.chemistry[selectedDate];
                 delete db.biology[selectedDate];
-                delete db.taskHistory[selectedDate];
-                localStorage.setItem('aiims_sync_final', JSON.stringify(db));
+                localStorage.setItem('practice_marathon_2026', JSON.stringify(db));
                 location.reload();
             }
         }
@@ -347,10 +254,8 @@
             document.getElementById('active-date-box').innerText = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
             
             setSubject('physics');
-            switchMode('normal');
             updateManzilMeter();
             renderCalendar();
-            renderChecklist();
         };
     </script>
 </body>
